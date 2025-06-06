@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo 0x68 | sudo tee /sys/class/i2c-adapter/i2c-1/delete_device
-
+# echo 0x68 | sudo tee /sys/class/i2c-adapter/i2c-1/delete_device
+sudo rmmod rtc_ds1307
 i2c_addr=0x68
 bus=1
 
@@ -36,4 +36,5 @@ temperature=$(echo "scale=2; $temp_msb + $temp_frac / 100" | bc)
 printf "DateTime: 20%02d-%02d-%02d %02d:%02d:%02d UTC\n" $year $month $day $hour $minute $second
 printf "Temperature: %.2f °C\n" $temperature
 
-echo ds3231 0x68 | sudo tee /sys/class/i2c-adapter/i2c-1/new_device
+# echo ds3231 0x68 | sudo tee /sys/class/i2c-adapter/i2c-1/new_device
+sudo modprobe rtc_ds1307
